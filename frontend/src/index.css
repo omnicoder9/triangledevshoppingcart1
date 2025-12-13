@@ -1,0 +1,14 @@
+/* 1. CSS Reset / Normalize */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. Set html and body to take full height */
+html, body, #root {
+  height: 100%;
+  width: 100%;                    
+}
