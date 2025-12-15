@@ -46,6 +46,7 @@ nav ul {
   flex-direction: row;
   align-items: center;
   gap: 6rem;
+  justify-content: center;
 }
 
 .nav-links li a {
@@ -79,4 +80,55 @@ nav ul {
 .appointment-btn:hover {
   background-color: white;
   color: black;
+}
+
+.hover-container {
+  position: relative;
+}
+
+.hover-link-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.hover-wrapper {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.hover-box {
+  background: darkmagenta;
+  padding: 15px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-sizing: border-box;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+.hover-item a {
+  display: block;
+  padding: 8px 0;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.hover-link-wrapper:hover .hover-wrapper {
+  display: block;
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+  pointer-events: auto;
 }

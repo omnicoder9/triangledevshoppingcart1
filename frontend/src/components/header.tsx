@@ -17,13 +17,41 @@ const Header = () => {
               <a href="/">Home</a>
             </li>
             <li>
-              <a href="/designs">Custom Designs</a>
+              <a href="/">Custom Designs</a>
             </li>
-            <li>
-              <a href="/about">About</a>
+
+            <li className="hover-container">
+              <div className="hover-link-wrapper">
+                <a href="/about">About</a>
+
+                <div className="hover-wrapper">
+                  <div className="hover-box">
+                    <div className="hover-item">
+                      <a href="/">Social</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </li>
-            <li>
-              <a href="/contact">Contact us</a>
+
+            <li className="hover-container">
+              <div className="hover-link-wrapper">
+                <a href="/contact">Contact us</a>
+
+                <div className="hover-wrapper">
+                  <div className="hover-box">
+                    <div className="hover-item">
+                      <a href="/">Refer Friends</a>
+                    </div>
+                    <div className="hover-item">
+                      <a href="/">Gift Card</a>
+                    </div>
+                    <div className="hover-item">
+                      <a href="/">Loyalty</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </li>
             <li>
               <a href="/contact">Projects</a>
@@ -32,7 +60,7 @@ const Header = () => {
         </nav>
 
         <div className="header-right">
-          <p>amount: {0}</p>
+          <p>Cart: {0}</p>
           <a href="/appointments" className="appointment-btn">
             Appointments
           </a>
