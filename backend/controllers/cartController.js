@@ -1,3 +1,4 @@
+//Must be swapped out with databse upon database implementation
 const cartItems = [{
   id: 1,
   userId: 1,
@@ -87,6 +88,37 @@ export const updateCartItem = (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to update cart item",
+      error: error.message
+    });
+  }
+};
+
+//delete cart item function
+export const removeFromCart = (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const index = cartItems.findIndex(
+      item => item.id === Number(id)
+    );
+
+    if (index === -1) {
+      return res.status(404).json({
+        success: false,
+        message: "Cart item not found"
+      });
+    }
+
+    const removedItem = cartItems.splice(index, 1)[0];
+
+    res.status(200).json({
+      success: true,
+      item: removedItem
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to remove cart item",
       error: error.message
     });
   }
