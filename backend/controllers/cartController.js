@@ -59,3 +59,35 @@ export const getCart = (req, res) => {
     });
   }
 };
+
+//update cart item function
+export const updateCartItem = (req, res) => {
+  try {
+    const { id } = req.params;
+    const { quantity } = req.body;
+
+    const item = cartItems.find(
+      item => item.id === Number(id)
+    );
+
+    if (!item) {
+      return res.status(404).json({
+        success: false,
+        message: "Cart item not found"
+      });
+    }
+
+    item.quantity = quantity;
+
+    res.status(200).json({
+      success: true,
+      item
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Failed to update cart item",
+      error: error.message
+    });
+  }
+};
