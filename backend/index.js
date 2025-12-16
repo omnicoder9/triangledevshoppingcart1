@@ -1,5 +1,7 @@
 const express = require('express');
 const cors = require('cors');
+const cartRoutes = require('./routes/cartroutes');
+
 
 const app = express();
 
@@ -10,6 +12,7 @@ app.get('/', (req, res) => {
   res.send('Server is working 🚀');
 });
 
+app.use('/cart', cartRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
