@@ -12,6 +12,14 @@ let nextId = 1;
 export const addToCart = (req, res) => {
   const { userId, productId, quantity } = req.body;
 
+  if (userId == null || productId == null || quantity == null) {
+    return res.status(400).json({
+      error: "Missing required fields",
+      required: ["userId", "productId", "quantity"],
+      received: req.body || null
+    });
+  }
+
   const existingItem = cartItems.find(
     item => item.userId === userId && item.productId === productId
   );
@@ -64,8 +72,34 @@ export const getCart = (req, res) => {
 //update cart item function
 export const updateCartItem = (req, res) => {
   try {
-    const { id } = req.params;
-    const { quantity } = req.body;
+    
+    const id = Number(req.params.id);
+
+    
+    const { quantity } = req.body || {};
+
+    
+    if (Number.isNaN(id)) {
+        return res.status(400).json({
+        error: "Invalid id",
+        message: "id must be a number"
+        });
+    }
+
+    
+    if (quantity == null) {
+        return res.status(400).json({
+        error: "Missing quantity",
+        message: "quantity is required"
+        });
+    }
+
+    if (typeof quantity !== "number" || quantity <= 0) {
+        return res.status(400).json({
+        error: "Invalid quantity",
+        message: "quantity must be a number greater than 0"
+        });
+    }
 
     const item = cartItems.find(
       item => item.id === Number(id)

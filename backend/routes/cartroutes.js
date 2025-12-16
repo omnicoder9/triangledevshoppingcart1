@@ -17,9 +17,4 @@ router.patch("/:id", updateCartItem);
 
 router.delete("/:id", removeFromCart);
 
-router.get("/test", (req, res) => {
-  res.send("cart route works");
-});
-
-
 module.exports = router;
