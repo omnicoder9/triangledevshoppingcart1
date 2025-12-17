@@ -1,18 +1,18 @@
-import bcrypt from "bcryptjs"
-import { v4 as uuid } from "uuid"
-import { users } from "../data/users.js"
+import bcrypt from 'bcryptjs'
+import { v4 as uuid } from 'uuid'
+import { users } from '../data/users.js'
 
 const SALT_ROUNDS = 10
 
 // Register a new user
 export const registerUser = async ({ email, password }) => {
   if (!email || !password) {
-    throw new Error("Email and password are required")
+    throw new Error('Email and password are required')
   }
 
-  const existingUser = users.find(u => u.email === email)
+  const existingUser = users.find((u) => u.email === email)
   if (existingUser) {
-    throw new Error("User already exists")
+    throw new Error('User already exists')
   }
 
   const passwordHash = await bcrypt.hash(password, SALT_ROUNDS)
@@ -21,7 +21,7 @@ export const registerUser = async ({ email, password }) => {
     id: uuid(),
     email,
     passwordHash,
-    role: "user"
+    role: 'user',
   }
 
   users.push(newUser)
@@ -30,29 +30,29 @@ export const registerUser = async ({ email, password }) => {
   return {
     id: newUser.id,
     email: newUser.email,
-    role: newUser.role
+    role: newUser.role,
   }
 }
 
 // Login an existing user
 export const loginUser = async ({ email, password }) => {
   if (!email || !password) {
-    throw new Error("Email and password are required")
+    throw new Error('Email and password are required')
   }
 
-  const user = users.find(u => u.email === email)
+  const user = users.find((u) => u.email === email)
   if (!user) {
-    throw new Error("Invalid credentials")
+    throw new Error('Invalid credentials')
   }
 
   const isMatch = await bcrypt.compare(password, user.passwordHash)
   if (!isMatch) {
-    throw new Error("Invalid credentials")
+    throw new Error('Invalid credentials')
   }
 
   return {
     id: user.id,
     email: user.email,
-    role: user.role
+    role: user.role,
   }
 }

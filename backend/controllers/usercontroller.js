@@ -1,5 +1,5 @@
-import { registerUser, loginUser } from "../services/auth.service.js"
-import { signToken } from "../utils/jwt.js"
+import { registerUser, loginUser } from '../services/auth.service.js'
+import { signToken } from '../utils/jwt.js'
 
 // POST /auth/register
 export const register = async (req, res, next) => {
@@ -12,7 +12,7 @@ export const register = async (req, res, next) => {
     res.status(201).json({
       success: true,
       user,
-      token
+      token,
     })
   } catch (err) {
     next(err)
@@ -30,7 +30,7 @@ export const login = async (req, res, next) => {
     res.json({
       success: true,
       user,
-      token
+      token,
     })
   } catch (err) {
     next(err)
@@ -44,7 +44,7 @@ export const me = async (req, res) => {
     user: {
       id: req.user.id,
       email: req.user.email,
-      role: req.user.role
-    }
+      role: req.user.role,
+    },
   })
 }
