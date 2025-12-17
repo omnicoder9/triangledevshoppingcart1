@@ -1,11 +1,3 @@
-// Temporary in-memory cart store (replace with database queries)
-const cartItems = [{
-  id: 1,
-  userId: 1,
-  productId: 2,
-  quantity: 1
-}];
-
 let nextId = 1;
 
 //add items to cart funciton

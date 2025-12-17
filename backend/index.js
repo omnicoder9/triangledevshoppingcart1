@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const cartRoutes = require('./routes/cartroutes');
+const userRoutes = require('./routes/userroutes');
 
 
 const app = express();
@@ -13,6 +14,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/cart', cartRoutes);
+app.use('/user', userRoutes)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

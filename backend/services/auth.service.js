@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs"
 import { v4 as uuid } from "uuid"
-import { users } from "../controllers/usercontroller"
+import { users } from "../data/users.js"
 
 const SALT_ROUNDS = 10
 

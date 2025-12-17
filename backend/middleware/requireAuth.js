@@ -1,5 +1,5 @@
 import { verifyToken } from "../utils/jwt.js"
-import { users } from "../controllers/usercontroller.js"
+import { users } from "../data/users.js"
 
 export const requireAuth = (req, res, next) => {
   const authHeader = req.headers.authorization
