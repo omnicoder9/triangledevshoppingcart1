@@ -1,7 +1,7 @@
-const express = require('express')
-const cors = require('cors')
-const cartRoutes = require('./routes/cartroutes')
-const userRoutes = require('./routes/userroutes')
+import express from 'express'
+import cors from 'cors'
+import cartRoutes from './routes/cartroutes.js'
+import userRoutes from './routes/userroutes.js'
 
 const app = express()
 

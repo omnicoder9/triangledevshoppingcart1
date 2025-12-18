@@ -1,141 +1,57 @@
-let nextId = 1
+import * as cartService from '../services/cart.service.js'
 
-//add items to cart funciton
-export const addToCart = (req, res) => {
-  const { userId, productId, quantity } = req.body
+export const getUserCart = (req, res) => {
+  const cart = cartService.getCartByUser(req.user.id)
+  res.json({ success: true, cart })
+}
 
-  if (userId == null || productId == null || quantity == null) {
-    return res.status(400).json({
-      error: 'Missing required fields',
-      required: ['userId', 'productId', 'quantity'],
-      received: req.body || null,
-    })
+export const addItemToCart = (req, res) => {
+  const { productId, quantity } = req.body
+
+  if (!productId || quantity == null) {
+    return res.status(400).json({ error: 'Missing fields' })
   }
 
-  const existingItem = cartItems.find(
-    (item) => item.userId === userId && item.productId === productId
+  const item = cartService.addToCart(
+    req.user.id,
+    productId,
+    quantity
   )
 
-  if (existingItem) {
-    existingItem.quantity += quantity
-    return res.status(200).json({
-      success: true,
-      item: existingItem,
-    })
-  }
-
-  const newItem = {
-    id: nextId++,
-    userId,
-    productId,
-    quantity,
-  }
-
-  cartItems.push(newItem)
-
-  res.status(201).json({
-    success: true,
-    item: newItem,
-  })
+  res.status(201).json({ success: true, item })
 }
 
-//return items from cart function
-export const getCart = (req, res) => {
-  try {
-    const { userId } = req.params
-
-    const userCart = cartItems.filter((item) => item.userId === Number(userId))
-
-    res.status(200).json({
-      success: true,
-      cart: userCart,
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to fetch cart',
-      error: error.message,
-    })
-  }
-}
-
-//update cart item function
 export const updateCartItem = (req, res) => {
+  const { quantity } = req.body
+  const itemId = Number(req.params.id)
+
   try {
-    const id = Number(req.params.id)
-
-    const { quantity } = req.body || {}
-
-    if (Number.isNaN(id)) {
-      return res.status(400).json({
-        error: 'Invalid id',
-        message: 'id must be a number',
-      })
-    }
-
-    if (quantity == null) {
-      return res.status(400).json({
-        error: 'Missing quantity',
-        message: 'quantity is required',
-      })
-    }
-
-    if (typeof quantity !== 'number' || quantity <= 0) {
-      return res.status(400).json({
-        error: 'Invalid quantity',
-        message: 'quantity must be a number greater than 0',
-      })
-    }
-
-    const item = cartItems.find((item) => item.id === Number(id))
-
-    if (!item) {
-      return res.status(404).json({
-        success: false,
-        message: 'Cart item not found',
-      })
-    }
-
-    item.quantity = quantity
-
-    res.status(200).json({
-      success: true,
-      item,
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to update cart item',
-      error: error.message,
-    })
+    const item = cartService.updateCartItem(
+      req.user.id,
+      itemId,
+      quantity
+    )
+    res.json({ success: true, item })
+  } catch (err) {
+    res.status(404).json({ error: err.message })
   }
 }
 
-//delete cart item function
-export const removeFromCart = (req, res) => {
+export const removeCartItem = (req, res) => {
+  const itemId = Number(req.params.id)
+
   try {
-    const { id } = req.params
-
-    const index = cartItems.findIndex((item) => item.id === Number(id))
-
-    if (index === -1) {
-      return res.status(404).json({
-        success: false,
-        message: 'Cart item not found',
-      })
-    }
-
-    const removedItem = cartItems.splice(index, 1)[0]
-
-    res.status(200).json({
-      success: true,
-      item: removedItem,
-    })
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Failed to remove cart item',
-      error: error.message,
-    })
+    const item = cartService.removeCartItem(
+      req.user.id,
+      itemId
+    )
+    res.json({ success: true, item })
+  } catch (err) {
+    res.status(404).json({ error: err.message })
   }
+}
+
+export const clearUserCart = (req, res) => {
+  cartService.clearCartByUser(req.user.id)
+  res.json({ success: true, message: 'Cart cleared' })
 }

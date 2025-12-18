@@ -1,20 +1,25 @@
-const express = require('express')
-
-const {
-  addToCart,
-  getCart,
+import express from 'express'
+import {
+  addItemToCart,
+  getUserCart,
   updateCartItem,
-  removeFromCart,
-} = require('../controllers/cartController')
+  removeCartItem,
+  clearUserCart,
+} from '../controllers/cartController.js'
+import { requireAuth } from '../middleware/requireAuth.js'
 
 const router = express.Router()
 
-router.post('/', addToCart)
+router.use(requireAuth)
 
-router.get('/:userId', getCart)
+router.get('/', getUserCart)
+
+router.post('/', addItemToCart)
 
 router.patch('/:id', updateCartItem)
 
-router.delete('/:id', removeFromCart)
+router.delete('/:id', removeCartItem)
 
-module.exports = router
+router.delete('/', clearUserCart)
+
+export default router
