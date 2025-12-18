@@ -13,7 +13,7 @@ export default function SearchBar() {
 
     navigate({
       pathname: "/search",
-      search: query ? `?q=${encodeURIComponent(query)}` : ""
+      search: query ? `?q=${encodeURIComponent(query)}` : "",
     });
   }
 
